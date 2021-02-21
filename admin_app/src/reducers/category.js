@@ -34,18 +34,22 @@ const buildNewCategories =  (parentId, categories, category) => {
     }
     for(let cate of categories){
         if(cate._id == parentId)
-        myCategories.push({
-            ...cate,
-            children: cate.children  ? buildNewCategories(parentId, [...cate.children, {
+        {
+            const newCategory= {
                 _id: category._id,
-                name: category.name, 
+                name: category.name,
                 slug: category.slug,
                 parentId: category.parentId,
-                children: category.children
-            }], category): []
+                children: []
+            }
+        
+        myCategories.push({
+            ...cate,
+            children: cate.children  ? [...cate.children, newCategory]: [newCategory]
 
 
         })
+    }
         else{
             myCategories.push({
                 ...cate,
@@ -106,6 +110,7 @@ export default (state= initState, action) => {
         case categoryConstants.ADD_NEW_CATEGORY_FAILURE:
             state={
                 ...state,
+                error: action.payload.error,
                 loading: false
             }
     }
