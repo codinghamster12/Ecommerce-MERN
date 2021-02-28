@@ -23,6 +23,9 @@ export default function Layout(props) {
                 <NavLink exact to={"/"}>Home</NavLink>
               </li>
               <li>
+                <NavLink to={"/page"}>Page</NavLink>
+              </li>
+              <li>
                 <NavLink to={"/products"}>Products</NavLink>
               </li>
               <li>

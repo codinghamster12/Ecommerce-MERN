@@ -220,7 +220,7 @@ const Products = () => {
                     <td onClick={() => showProductDetailModal(prod)}>{prod.name}</td>
                     <td>{prod.price}</td>
                     <td>{prod.quantity}</td>
-                    <td>{prod.category.name}</td>
+                    <td>{prod.category? prod.category.name : null}</td>
                   </tr>
                 </tbody>
               );

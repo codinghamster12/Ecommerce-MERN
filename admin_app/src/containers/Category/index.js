@@ -39,6 +39,12 @@ const Category = () => {
   const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
 
   const handleClose = () => {
+
+    if(categoryName === ""){
+      alert('Category name is required')
+      setShow(false)
+      return
+    }
     const form = new FormData();
     form.append("name", categoryName);
     form.append("parentId", parentId);
@@ -143,6 +149,8 @@ const Category = () => {
 
   const updateCategoriesForm = () => {
     setUpdateCategoryModal(false);
+
+  
     const form = new FormData();
     expandedArray.forEach((item, index) => {
       form.append("_id", item.value);
@@ -156,11 +164,7 @@ const Category = () => {
       form.append("parentId", item.parentId ? item.parentId : "");
       form.append("type", item.type);
     });
-    dispatch(updateCategories(form)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-      }
-    });
+    dispatch(updateCategories(form))
   };
 
   const deleteCategory = () => {
@@ -176,6 +180,7 @@ const Category = () => {
         value: cate._id,
         name: cate.name,
         parentId: cate.parentId,
+        type: cate.type
       });
       if (cate.children.length > 0) {
         createCategoryList(cate.children, options);
@@ -265,7 +270,8 @@ const Category = () => {
       {/* Edit Category */}
       <UpdateCategoriesModal
       show={updateCategoryModal}
-      handleClose={updateCategoriesForm}
+      handleClose= { () => setShow(false)}
+      onSubmit={updateCategoriesForm}
       modalTitle={'Update Categories'}
       size="lg"
       expandedArray={expandedArray}
@@ -275,7 +281,8 @@ const Category = () => {
       {/* Add Category */}
       <AddCategoryModal 
       show={show}
-      handleClose={handleClose}
+      handleClose={() => setShow(false)}
+      onSubmit={handleClose}
       modalTitle={'Add New Category'}
       parentId={parentId}
       setParentId={setParentId}

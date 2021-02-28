@@ -48,9 +48,11 @@ exports.signin = (role) => {
   return function (req, res) {
     User.findOne({ email: req.body.email }).exec((error, user) => {
       if (error) {
+        console.log(error)
         return res.status(400).json({
           error,
         });
+        
       }
       if (user) {
         if (user.authenticate(req.body.password)) {

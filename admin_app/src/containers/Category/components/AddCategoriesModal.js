@@ -4,12 +4,13 @@ import Input from "../../../components/UI/Input";
 import { Row, Col, Form } from "react-bootstrap";
 
 const AddCategoryModal = (props) => {
-    const { show, handleClose, modalTitle, categoryName, setCategoryName, parentId, setParentId, handleCategoryImage, categoryList }= props
+    const { show, handleClose, modalTitle, onSubmit, categoryName, setCategoryName, parentId, setParentId, handleCategoryImage, categoryList }= props
     return (
       <Modal
         show={show}
         handleClose={handleClose}
         modalTitle={modalTitle}
+        onSubmit={onSubmit}
       >
        
         <Form>
@@ -55,6 +56,7 @@ const AddCategoryModal = (props) => {
           
         
         </Form>
+        
       </Modal>
     );
   };

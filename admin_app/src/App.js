@@ -10,24 +10,33 @@ import { isUserLoggedIn, getInitialData } from './actions';
 import Products from "./containers/Products";
 import Orders from "./containers/Orders";
 import Category from "./containers/Category";
+import NewPage from "./containers/NewPage";
+
+
 
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const category= useSelector(state => state.category);
+
+  // componentDidMount or componentDidUpdate
   useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    dispatch(getInitialData())
+    if(auth.authenticate){
+      dispatch(getInitialData())
+
+    }
 
     
-  }, []);
+  }, [auth.authenticate]);
 
   return (
     <div className="App">
       <Switch>
         <PrivateRoute exact path="/" component={Home}></PrivateRoute>
+        <PrivateRoute path="/page" component={NewPage}></PrivateRoute>
         <PrivateRoute path="/orders" component={Orders}></PrivateRoute>
         <PrivateRoute path="/products" component= {Products}></PrivateRoute>
         <PrivateRoute path="/category" component={Category}></PrivateRoute>

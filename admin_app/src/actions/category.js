@@ -3,29 +3,36 @@ import { categoryConstants } from "./constants";
 
 export const getAllCategory = () => {
   return async (dispatch) => {
-    dispatch({
-      type: categoryConstants.GET_ALL_CATEGORIES_REQUEST,
-    });
-    const res = await axios.get("/category/getCategories");
-    console.log(res);
-
-    if (res.status == 200) {
-      const { categoryList } = res.data;
-      console.log(categoryList);
+    try{
       dispatch({
-        type: categoryConstants.GET_ALL_CATEGORIES_SUCCESS,
-        payload: {
-          categoryList,
-        },
+        type: categoryConstants.GET_ALL_CATEGORIES_REQUEST,
       });
-    } else {
-      if (res.status == 400) {
+      const res = await axios.get("/category/getCategories");
+      console.log(res);
+  
+      if (res.status == 200) {
+        const { categoryList } = res.data;
+        console.log(categoryList);
+        dispatch({
+          type: categoryConstants.GET_ALL_CATEGORIES_SUCCESS,
+          payload: {
+            categoryList,
+          },
+        });
+      } 
+
+    }
+    catch(error){
+      if(error.response.status == 400){
         dispatch({
           type: categoryConstants.GET_ALL_CATEGORIES_FAILURE,
-          payload: res.data.error,
-        });
+          payload:{
+            error: error.response.data.error
+          }
+        })
       }
     }
+    
   };
 };
 
@@ -36,7 +43,7 @@ export const addCategory = (form) => {
     });
     try{
       const res = await axios.post("/category/create", form);
-    console.log(res);
+   
     if (res.status == 201) {
       dispatch({
         type: categoryConstants.ADD_NEW_CATEGORY_SUCCESS,
@@ -44,19 +51,18 @@ export const addCategory = (form) => {
           category: res.data.category,
         },
       });
-    } else {
-      if (res.status == 400) {
-        dispatch({
-          type: categoryConstants.ADD_NEW_CATEGORY_FAILURE,
-          payload: res.data.error,
-        });
-      }
-
-    }
+    } 
   }
     
     catch(error){
-      console.log(error)
+      if(error.response.status == 500){
+        dispatch({
+          type: categoryConstants.ADD_NEW_CATEGORY_FAILURE,
+          payload: {
+            error: error.response.data.error
+          }
+        })
+      }
 
     }
     }
@@ -67,14 +73,23 @@ export const updateCategories = (form) => {
   return async (dispatch) => {
 
       try{
+        dispatch({
+          type:categoryConstants.UPDATE_CATEGORIES_REQUEST
+        })
 
         const res = await axios.post("/category/update", form);
         if(res.status == 201){
-          return true;
+          dispatch({
+            type:categoryConstants.UPDATE_CATEGORIES_SUCCESS
+          })
+          dispatch(getAllCategory());
         }
       }
       catch(error){
-          console.log(error.response.data)
+        dispatch({
+          type:categoryConstants.UPDATE_CATEGORIES_FAILURE,
+          payload: { error }
+        })
 
       }
 
@@ -88,6 +103,9 @@ export const deleteCategories = (ids) => {
   return async (dispatch) => {
 
       try{
+        dispatch({
+          type: categoryConstants.DELETE_CATEGORIES_REQUEST
+        })
 
         const res = await axios.post("/category/delete", {
           payload: {
@@ -96,16 +114,20 @@ export const deleteCategories = (ids) => {
 
         });
         if(res.status == 200){
-          return true;
+          dispatch(getAllCategory())
+          dispatch({
+            type: categoryConstants.DELETE_CATEGORIES_SUCCESS
+          })
         }
-        else{
-          return false;
-        }
+        
         
         
       }
       catch(error){
-          console.log(error.response.data)
+          dispatch({
+            type: categoryConstants.DELETE_CATEGORIES_FAILURE,
+            payload: { error: error.response.data.error }
+          })
 
       }
 

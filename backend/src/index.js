@@ -7,6 +7,7 @@ const authRoutes= require('./routes/auth');
 const adminRoutes= require('./routes/admin/auth');
 const categoryRoutes= require('./routes/category');
 const productRoutes= require('./routes/product');
+const pageRoutes= require('./routes/admin/page');
 const cartRoutes= require('./routes/cart');
 const initialDataRoutes= require('./routes/admin/initialData')
 const cors= require('cors');
@@ -32,6 +33,7 @@ app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
 app.use('/api', cartRoutes);
 app.use('/api', initialDataRoutes)
+app.use('/api', pageRoutes)
 
 
 
