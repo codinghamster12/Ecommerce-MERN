@@ -5,12 +5,13 @@ import { Row, Col, Form } from "react-bootstrap";
 
 
 const UpdateCategoriesModal = (props) => {
-    const { show, handleClose, modalTitle, size, expandedArray, checkedArray, handleCategoryInput, categoryList } = props
+    const { show, handleClose, modalTitle, onSubmit, size, expandedArray, checkedArray, handleCategoryInput, categoryList } = props
     console.log({ expandedArray, checkedArray })
     return (
       <Modal
         show={show}
         handleClose={handleClose}
+        onSubmit={onSubmit}
         modalTitle={modalTitle}
         size={size}
        

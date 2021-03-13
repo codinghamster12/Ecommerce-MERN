@@ -25,6 +25,7 @@ box-shadow: 0 2px 2px -2px #333;
     cursor: pointer;
     padding: 0 20px;
     font-size: 14px;
+    z-index: 1;
 }
 .menuHeader > ul > li > span:hover{
     color: #2874f0;

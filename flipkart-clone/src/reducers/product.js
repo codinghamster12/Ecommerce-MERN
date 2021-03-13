@@ -8,7 +8,10 @@ const initState={
         under15k: [],
         under20k: [],
         under30k:[]
-    }
+    },
+    page:{},
+    pageRequest: false,
+    error: null
 }
 
 export default(state= initState, action) => {
@@ -25,6 +28,34 @@ export default(state= initState, action) => {
                 productsByPrice: action.payload.productsByPrice
             }
             break;
+
+        case productConstants.GET_PRODUCT_PAGE_REQUEST:
+            state={
+                ...state,
+                pageRequest: true
+
+            }
+            break;
+
+            case productConstants.GET_PRODUCT_PAGE_SUCCESS:
+                state={
+                    ...state,
+                    page: action.payload.page, 
+                    pageRequest: false,
+
+    
+                }
+                break;
+            case productConstants.GET_PRODUCT_PAGE_FAILURE:
+                state={
+                    ...state,
+                    pageRequest: false,
+                    error: action.payload.error
+                }
+
+                break;
+        
+        
     }
     return state;
 }

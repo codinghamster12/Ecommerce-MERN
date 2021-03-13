@@ -16,7 +16,7 @@ const MenuHeader = (props) => {
         for (let cate of categories) {
           myCategories.push(
             <li key={cate.name}>
-                {cate.parentId ? <a href={cate.slug}>{cate.name}</a>:
+                {cate.parentId ? <a href={`/${cate.slug}?cid=${cate._id}&type=${cate.type}`}>{cate.name}</a>:
                 <span>{cate.name}</span>}
               {cate.children.length > 0 ? (
                 <ul>{renderCategories(cate.children)}</ul>
