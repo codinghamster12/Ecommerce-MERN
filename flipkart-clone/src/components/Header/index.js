@@ -31,8 +31,8 @@ const Header = (props) => {
 
   useEffect(() => {
 
-    if(!auth.authenticate){
-      dispatch(isUserLoggedIn())
+    if(auth.authenticate){
+      setLoginModal(false)
     }
 
     
