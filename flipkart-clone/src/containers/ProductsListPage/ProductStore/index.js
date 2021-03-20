@@ -3,6 +3,7 @@ import { getProductsBySlug } from "../../../actions/product";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import { generatePublicURL } from "../../../urlConfig";
+import { Link } from 'react-router-dom';
 
 export default function ProductStore(props) {
   const [priceRange, setPriceRange] = useState({
@@ -23,7 +24,7 @@ export default function ProductStore(props) {
     <>
       {Object.keys(product.productsByPrice).map((key, index) => {
         return (
-          <div className="card">
+          <div className="storeCard">
             <div className="cardHeader">
               <div>
                 {props.match.params.slug} Mobiles under {priceRange[key]}
@@ -33,7 +34,11 @@ export default function ProductStore(props) {
             <div>
               {product.productsByPrice[key].map((prod) => {
                 return (
-                  <div className="productContainer">
+                  <Link
+                  to={`/${prod.slug}/${prod._id}/p`}
+                  style={{
+                    display: 'block'
+                  }} className="productContainer">
                     <div className="productImgContainer">
                       <img
                         src={generatePublicURL(prod.productPictures[0].img)}
@@ -50,7 +55,7 @@ export default function ProductStore(props) {
                       </div>
                       <div className="productPrice">{prod.price}</div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

@@ -2,7 +2,7 @@ const express= require('express');
 const router= express.Router();
 //const { addCategory, getCategories } = require('../controllers/category');
 const { requireSignin, adminMiddleware } = require('../common_middleware');
-const { createProduct, getProductsBySlug }= require('../controllers/product');
+const { createProduct, getProductsBySlug, getProductDetailsById }= require('../controllers/product');
 const multer= require('multer');
 const path= require('path');
 const shortid= require('shortid');
@@ -22,6 +22,7 @@ const Product= require('../models/product');
 
 router.post('/product/create',requireSignin, adminMiddleware, upload.array('productPicture'), createProduct);
 router.get('/products/:slug', getProductsBySlug)
+router.get('/product/:productId', getProductDetailsById)
 //router.get('/category/getCategories', getCategories);
 
 

@@ -4,16 +4,16 @@ const {
     signin,
     signout
     
-} = require('../../controllers/auth');
+} = require('../../controllers/admin/auth');
 const { requireSignin }= require('../../common_middleware');
 const router= express.Router();
 const { validateRequestSignup, validateRequestSignin, isRequestValidated }= require('../../validators/auth');
 
 
 
-router.post('/admin/signup', validateRequestSignup, isRequestValidated, signup('admin'));
+router.post('/admin/signup', validateRequestSignup, isRequestValidated, signup);
 
-router.post('/admin/signin',validateRequestSignin, isRequestValidated, signin('admin'));
+router.post('/admin/signin',validateRequestSignin, isRequestValidated, signin);
 router.post('/admin/signout', signout)
 
 

@@ -1,20 +1,19 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt= require('bcrypt');
-const shortid= require('shortid');
 
-exports.signup = (role) => {
+exports.signup = (req, res) => {
 
  
 
-  return function (req, res) {
+  
 
     
     
     User.findOne({ email: req.body.email }).exec( async (error, user) => {
       if (user)
         return res.status(400).json({
-          message: `${role} already registered`,
+          message: `User already registered`,
         });
 
       const { firstName, lastName, email, password } = req.body;
@@ -25,7 +24,7 @@ exports.signup = (role) => {
         email,
         hash_password,
         userName: Math.random().toString(),
-        role: role
+        role: 'user'
       });
 
       _user.save((error, data) => {
@@ -36,16 +35,15 @@ exports.signup = (role) => {
         }
         if (data) {
           return res.status(201).json({
-            message: `${role} created successfully.`,
+            message: `User created successfully.`,
           });
         }
       });
     });
   };
-};
 
-exports.signin = (role) => {
-  return function (req, res) {
+
+exports.signin = (req, res) => {
     User.findOne({ email: req.body.email }).exec((error, user) => {
       if (error) {
         console.log(error)
@@ -55,7 +53,7 @@ exports.signin = (role) => {
         
       }
       if (user) {
-        if (user.authenticate(req.body.password)) {
+        if (user.authenticate(req.body.password) && user.role === 'user') {
           const token = jwt.sign(
             {
               _id: user._id,
@@ -82,8 +80,9 @@ exports.signin = (role) => {
             },
           });
         } else {
+
           return res.status(400).json({
-            message: "Invalid Password",
+            message: "Something went wrong",
           });
         }
       } else {
@@ -93,7 +92,6 @@ exports.signin = (role) => {
       }
     });
   };
-};
 
 exports.signout= (req, res) => {
   res.clearCookie('token');

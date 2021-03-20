@@ -28,17 +28,30 @@ export const login = (user) => {
                     })
         
                 }
+                else{
+                    if(res.status == 400){
+                        dispatch({
+                            type: authConstants.LOGIN_FAILURE,
+                            payload: {
+                                error: res.data
+                            }
+                        })
+
+                    }
+                }
+                
 
         }
         
             
         
         catch(error){
+            console.log(error)
             if(error.response.status == 400){
                 dispatch({
                     type: authConstants.LOGIN_FAILURE,
                     payload: {
-                        error: error.response.data.error
+                        error: error.response.data
                     }
                 })
             }

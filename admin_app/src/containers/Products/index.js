@@ -21,7 +21,7 @@ const Products = () => {
   const product = useSelector((state) => state.product);
   const [productDetails, setProductDetails]= useState({});
 
-  const handleClose = () => {
+  const onSubmit = () => {
     const form = new FormData();
     form.append("name", name);
     form.append("quantity", quantity);
@@ -37,6 +37,8 @@ const Products = () => {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+
+  const handleClose = () => setShow(false);
 
   const handleProductPicture = (e) => {
     setProductImages([...productImages, e.target.files[0]]);
@@ -127,6 +129,7 @@ const Products = () => {
     return (
       <Modal
         show={show}
+        onSubmit={onSubmit}
         handleClose={handleClose}
         modalTitle={"Add New Product"}
       >
