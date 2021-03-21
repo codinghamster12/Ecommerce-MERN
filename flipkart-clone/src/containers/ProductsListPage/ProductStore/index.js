@@ -31,7 +31,7 @@ export default function ProductStore(props) {
               </div>
               <button>View All</button>
             </div>
-            <div>
+            <div style={{ display: 'flex'}}>
               {product.productsByPrice[key].map((prod) => {
                 return (
                   <Link

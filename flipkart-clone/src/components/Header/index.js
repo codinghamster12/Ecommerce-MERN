@@ -10,7 +10,7 @@ import {
   DropdownMenu,
 } from "../MaterialUI";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../actions/auth";
+import { login, signout } from "../../actions/auth";
 import { isUserLoggedIn } from "../../actions/auth"
 
 /**
@@ -24,6 +24,10 @@ const Header = (props) => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth= useSelector(state => state.auth)
+
+  const logout = () => {
+    dispatch(signout());
+  }
 
   const userLogin = () => {
     dispatch(login({ email, password }));
@@ -58,7 +62,7 @@ const Header = (props) => {
               { label: "Rewards", href: "", icon: null },
               { label: "Notifications", href: "", icon: null },
               { label: "Gift Cards", href: "", icon: null },
-              { label: "Logout", href: "", icon: null },
+              { label: "Logout", href: "", icon: null, onClick: logout },
 
             ]}
             firstMenu={
@@ -90,7 +94,7 @@ const Header = (props) => {
               { label: "Rewards", href: "", icon: null },
               { label: "Notifications", href: "", icon: null },
               { label: "Gift Cards", href: "", icon: null },
-              { label: "Logout", href: "", icon: null },
+              { label: "Logout", href: "", icon: null, onClick: logout },
             ]}
             firstMenu={
               <div className="firstmenu">
