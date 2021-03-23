@@ -8,6 +8,7 @@ import { AiFillThunderbolt } from "react-icons/ai";
 import { MaterialButton } from "../../components/MaterialUI";
 import "./style.css";
 import { generatePublicURL } from "../../urlConfig";
+import { addToCart } from "../../actions/cart";
 
 function ProductDetailsPage(props) {
   const dispatch = useDispatch();
@@ -23,7 +24,6 @@ function ProductDetailsPage(props) {
     };
 
     dispatch(getProductDetailsById(payload));
-    
   }, []);
 
   if (Object.keys(product.productDetails).length === 0) return null;
@@ -65,6 +65,12 @@ function ProductDetailsPage(props) {
                   marginRight: "5px",
                 }}
                 icon={<IoMdCart />}
+                onClick={() => {
+                  const { _id, name, price } = product.productDetails;
+                  const img = product.productDetails.productPictures[0].img;
+                  dispatch(addToCart({ _id, name, price, img}))
+                  props.history.push(`/cart`)
+                }}
               />
               <MaterialButton
                 title="BUY NOW"
