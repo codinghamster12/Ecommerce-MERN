@@ -67,7 +67,8 @@ export const signout = () => {
     try {
       const res = await axios.post(`/signout`);
       if (res.status == 200) {
-        localStorage.clear();
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
         dispatch({
           type: authConstants.LOGOUT_SUCCESS,
         });
